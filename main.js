@@ -1,99 +1,57 @@
-const FamilyTree = require("./familyTree");
+const myFamily = require('./myFamily');
 
 function main(err, data) {
   if (err) throw err;
-  // family tree instansiating
-  let myFamily = new FamilyTree("King Shah", "Queen Anga");
-  // myFamily member population
-  myFamily.add("Queen Anga", "Chit", "Male", "Amba");
-  myFamily.add("Queen Anga", "Ish", "Male");
-  myFamily.add("Queen Anga", "Vich", "Male", "Lika");
-  myFamily.add("Queen Anga", "Aras", "Male", "Chitra");
-  myFamily.add("Queen Anga", "Satya", "Female", "Vyan");
-  myFamily.add("Amba", "Dritha", "Female", "Jaya");
-  myFamily.add("Amba", "Tritha", "Female");
-  myFamily.add("Amba", "Vritha", "Male");
-  myFamily.add("Lika", "Vila", "Female");
-  myFamily.add("Lika", "Chika", "Female");
-  myFamily.add("Chitra", "Jnki", "Female", 'Arit');
-  myFamily.add("Chitra", "Ahit", "Male");
-  myFamily.add("Satya", "Asva", "Male", 'Satvy');
-  myFamily.add("Satya", "Vyas", "Male", 'Krpi');
-  myFamily.add("Satya", "Atya", "Female");
-  myFamily.add("Jaya", "Yodhan", "Male");
-  myFamily.add("Jnki", "Laki", "Male");
-  myFamily.add("Jnki", "Lavnya", "Female");
-  myFamily.add("Satvy", "Vasa", "Male");
-  myFamily.add("Krpi", "Kriya", "Male");
-  myFamily.add("Krpi", "Krithi", "Female");
 
   let inputs = data.split('\n').map(l => l.replace('\r', ''));
   inputs.map((input) => {
     let inputArr = input.split(' ');
     switch (inputArr[0]) {
       case 'ADD_CHILD':
-        let mother_name = inputArr[1];
-        let name = inputArr[2]
+        let motherName = inputArr[1];
+        let childName = inputArr[2]
         let gender = inputArr[3];
-        let add_status = myFamily.add(mother_name, name, gender);
-        console.log(add_status.msg)
+        let status = myFamily.addChild(motherName, childName, gender);
+        myFamily.output(status);
         break;
       case 'GET_RELATIONSHIP':
-        let pname = inputArr[1];
+        let pName = inputArr[1];
         let relationship = inputArr[2];
         switch (relationship) {
           case 'Paternal-Uncle':
-            myFamily.output(myFamily.getUncles(pname, 'paternal'))
-            //let p_uncles = myFamily.getUncles(pname, 'paternal');            
-            //console.log(p_uncles.err ? p_uncles.err : p_uncles.data.join(' '));
+            myFamily.output(myFamily.getUncles(pName, 'paternal'));
             break;
           case 'Maternal-Uncle':
-            myFamily.output(myFamily.getUncles(pname, 'maternal'))
-            // let m_uncles = myFamily.getUncles(pname, 'maternal');
-            // console.log(m_uncles.err ? m_uncles.err : m_uncles.data.join(' '));
+            myFamily.output(myFamily.getUncles(pName, 'maternal'));
             break;
           case 'Paternal-Aunt':
-            myFamily.output(myFamily.getAunties(pname, 'paternal'))
-            // let p_aunties = myFamily.getAunties(pname, 'paternal');
-            // console.log(p_aunties.err ? p_aunties.err : p_aunties.data.join(' '));
+            myFamily.output(myFamily.getAunties(pName, 'paternal'));
             break;
           case 'Maternal-Aunt':
-            myFamily.output(myFamily.getAunties(pname, 'maternal'))
-            // let m_aunties = myFamily.getAunties(pname, 'maternal');
-            // console.log(m_aunties.err ? m_aunties.err : m_aunties.data.join(' '));
+            myFamily.output(myFamily.getAunties(pName, 'maternal'));
             break;
           case 'Sister-In-Law':
-            myFamily.output(myFamily.getInLaws(pname, 'sister'))
-            // let sis_in_laws = myFamily.getInLaws(pname, 'sister');
-            // console.log(sis_in_laws.err ? sis_in_laws.err : sis_in_laws.data.join(' '));
+            myFamily.output(myFamily.getInLaws(pName, 'sister'));
             break;
           case 'Brother-In-Law':
-            myFamily.output(myFamily.getInLaws(pname, 'brother'))
-            // let bro_in_laws = myFamily.getInLaws(pname, 'brother');
-            // console.log(bro_in_laws.err ? bro_in_laws.err : bro_in_laws.data.join(' '));
+            myFamily.output(myFamily.getInLaws(pName, 'brother'));
             break;
           case 'Son':
-            myFamily.output(myFamily.getChildren(pname, 'son'))
-            // let sons = myFamily.getChildren(pname, 'son');
-            // console.log(sons.err ? sons.err : sons.data.join(' '));
+            myFamily.output(myFamily.getChildrenByKey(pName, 'son'));
             break;
           case 'Daughter':
-            myFamily.output(myFamily.getChildren(pname, 'daughter'))
-            // let daughters = myFamily.getChildren(pname, 'daughter');
-            // console.log(daughters.err ? daughters.err : daughters.data.join(' '));
+            myFamily.output(myFamily.getChildrenByKey(pName, 'daughter'));
             break;
           case 'Siblings':
-            myFamily.output(myFamily.getSiblings(pname))
-            // let siblings = myFamily.getSiblings(pname);
-            // console.log(siblings.err ? siblings.err : siblings.data.join(' '));
+            myFamily.output(myFamily.getSiblings(pName));
             break;
           default:
-            console.log('NONE');
+            myFamily.output('NONE',null,null);
             break;
         }
         break;
       default:
-        console.log('Input Error');
+        myFamily.output('Input Error',null,null);
         break;
     }
   })

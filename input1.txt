@@ -1,3 +1,9 @@
 ADD_CHILD Satya Ketu Male
 GET_RELATIONSHIP Kriya Paternal-Uncle
 GET_RELATIONSHIP Satvy Brother-In-Law
+ADD_CHILD Asva Vani Female
+GET_RELATIONSHIP Vasa Siblings
+GET_RELATIONSHIP Atya Sister-In-Law
+ADD_CHILD Chitra Aria Female
+GET_RELATIONSHIP Lavnya Maternal-Aunt
+GET_RELATIONSHIP Aria Siblings
